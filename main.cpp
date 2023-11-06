@@ -26,7 +26,7 @@ bool isNumber(const std::string& str)
 {
 	for (char const& c : str)
 	{
-		if (std::isdigit(c) == 0)
+		if (std::isdigit(c) == 0 && c != '.')
 			return false;
 	}
 	return true;
@@ -46,10 +46,12 @@ int	checkFormat(char *str, Poly *poly)
 		else if (((*it).find("*") <= (*it).length() || (*it)[0] == '*') && (*it).length() == 1)
 		{
 			std::vector<std::string>::iterator tmp(it);
+			std::string recup;
 			tmp--;
 			if (!isNumber(*tmp))
 				return (0);
-			factors.push_back(*tmp);
+			//factors.push_back(*tmp);
+			recup = *tmp;
 			tmp = it;
 			tmp++;  
 			if ((*tmp)[0] != 'X' || (*tmp)[1] != '^')
@@ -62,10 +64,14 @@ int	checkFormat(char *str, Poly *poly)
 				else
 					powers.push_back(atoi(pow.c_str()));
 			}
-			factors.push_back(*tmp);
+			recup += *tmp;
+			factors.push_back(recup);
 			tmp++;
 			if (tmp != vec.end() && (*tmp).length() > 0 && ((*tmp)[0] == '+' || (*tmp)[0] == '-' ))
+			{
 				sign.push_back((*(tmp))[0]);
+				factors.push_back(*(tmp));
+			}
 			//std::cout << "ici = " << (*tmp) << "\n";
 		}
 	}
