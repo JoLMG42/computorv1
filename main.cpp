@@ -1,12 +1,12 @@
 #include <iostream>
-#include <vector>
+#include <deque>
 #include "Poly.hpp"
 #include <stdlib.h>
 
 
-std::vector<std::string> ft_splitVector(std::string str, std::string deli)
+std::deque<std::string> ft_splitdeque(std::string str, std::string deli)
 {
-	std::vector<std::string> res;
+	std::deque<std::string> res;
 
 		int start = 0;
 		int end = str.find(deli);
@@ -34,18 +34,18 @@ bool isNumber(const std::string& str)
 
 int	checkFormat(char *str, Poly *poly)
 {
-	std::vector<std::string>	factors;
-	std::vector<char>		sign;
-	std::vector<int>		powers;
+	std::deque<std::string>	factors;
+	std::deque<char>		sign;
+	std::deque<int>		powers;
 	poly->setExpr(str);
-	std::vector<std::string> vec = ft_splitVector(str, " ");
-	for (std::vector<std::string>::iterator it = vec.begin(); it != vec.end(); ++it)
+	std::deque<std::string> vec = ft_splitdeque(str, " ");
+	for (std::deque<std::string>::iterator it = vec.begin(); it != vec.end(); ++it)
 	{
 		if (((*it).find("*") <= (*it).length() || (*it)[0] == '*') && (*it).length() != 1)
 			return (0);
 		else if (((*it).find("*") <= (*it).length() || (*it)[0] == '*') && (*it).length() == 1)
 		{
-			std::vector<std::string>::iterator tmp(it);
+			std::deque<std::string>::iterator tmp(it);
 			std::string recup;
 			tmp--;
 			if (!isNumber(*tmp))
@@ -65,38 +65,46 @@ int	checkFormat(char *str, Poly *poly)
 					powers.push_back(atoi(pow.c_str()));
 			}
 			recup += *tmp;
-			factors.push_back(recup);
-			tmp++;
+			//tmp--;
+			std::deque<std::string>::iterator tmp2(it);
+			tmp2--;
+			if (tmp2 != vec.begin())
+			{
+				tmp2--;
+				if ((*tmp2).length() > 0)
+					recup.insert(0, 1, (*tmp2)[0]);
+			}
 			if (tmp != vec.end() && (*tmp).length() > 0 && ((*tmp)[0] == '+' || (*tmp)[0] == '-' ))
 			{
 				sign.push_back((*(tmp))[0]);
-				factors.push_back(*(tmp));
+				//factors.push_back(*(tmp));
 			}
+			factors.push_back(recup);
 			//std::cout << "ici = " << (*tmp) << "\n";
 		}
 	}
 	poly->setFactors(factors);
 	poly->setSign(sign);
 	poly->setPowers(powers);
-	std::vector<std::string> recupFactor = poly->getFactors();
-	for (std::vector<std::string>::iterator it = recupFactor.begin(); it != recupFactor.end();++ it)
+	std::deque<std::string> recupFactor = poly->getFactors();
+	for (std::deque<std::string>::iterator it = recupFactor.begin(); it != recupFactor.end();++ it)
 		std::cout << "factors = " << *it << "\n";
-	std::vector<char> recupSign = poly->getSign();
-	for (std::vector<char>::iterator it = recupSign.begin(); it != recupSign.end();++ it)
+	std::deque<char> recupSign = poly->getSign();
+	for (std::deque<char>::iterator it = recupSign.begin(); it != recupSign.end();++ it)
 		std::cout << "sign = " << *it << "\n";
-	std::vector<int> recupPowers = poly->getPowers();
-	for (std::vector<int>::iterator it = recupPowers.begin(); it != recupPowers.end();++ it)
+	std::deque<int> recupPowers = poly->getPowers();
+	for (std::deque<int>::iterator it = recupPowers.begin(); it != recupPowers.end();++ it)
 		std::cout << "powers = " << *it << "\n";
 	std::cout << poly->getExpr();
 	return (1);
 
 }
 
-std::vector<std::string> splitStart(std::string str, std::string delim)
+std::deque<std::string> splitStart(std::string str, std::string delim)
 {
 	size_t start = 0;
 	size_t pos_delim = str.find(delim);
-	std::vector<std::string> ret;
+	std::deque<std::string> ret;
 	while (pos_delim != str.npos)
 	{
 		ret.push_back(str.substr(start, pos_delim - start));
@@ -118,14 +126,18 @@ int	main(int ac, char **av)
 		std::cout << "Wrong number of arguments\n";
 		return (0);
 	}
-	std::vector<std::string> recupPoly = splitStart(av[1], "=");
+	std::string oh(av[1]);
+	std::deque<std::string> recupPoly = splitStart(oh, "=");
+	for (std::deque<std::string>::iterator it = recupPoly.begin(); it != recupPoly.end();++ it)
+		std::cout << "split ret = " << *it << "\n";
+
 	std::cout << "POlY left = " << *(recupPoly.begin()) << "\n";
 	if (!checkFormat((char *)(recupPoly.begin())->c_str(), &polyLeft))
 	{
 		std::cout << "Wrong format\n";
 		return (0);
 	}
-	std::vector<std::string>::iterator itEnd = recupPoly.end();
+	std::deque<std::string>::iterator itEnd = recupPoly.end();
 	itEnd--;
 	std::cout << "\nPOlY RIGHT = " << (*itEnd) << "\n";
 	if (!checkFormat((char *)((*itEnd).c_str()), &polyRight))

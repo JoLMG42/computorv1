@@ -16,15 +16,15 @@
 
 #include <iostream>
 #include <string>
-#include <vector>
+#include <deque>
 
 class	Poly
 {
 	private:
 		std::string			expr;
-		std::vector<int>		powers;
-		std::vector<char>		sign;
-		std::vector<std::string>	factors;
+		std::deque<int>		powers;
+		std::deque<char>		sign;
+		std::deque<std::string>	factors;
 
 	public:
 		Poly(void);
@@ -32,12 +32,12 @@ class	Poly
 
 		void				setExpr(char *str);
 		std::string	 		getExpr(void);
-		void				setPowers(std::vector<int> vec);
-		std::vector<int>		getPowers(void);
-		void				setSign(std::vector<char> vec);
-		std::vector<char> 		getSign(void);
-		void				setFactors(std::vector<std::string> vec);
-		std::vector<std::string>	getFactors(void);
+		void				setPowers(std::deque<int> vec);
+		std::deque<int>		getPowers(void);
+		void				setSign(std::deque<char> vec);
+		std::deque<char> 		getSign(void);
+		void				setFactors(std::deque<std::string> vec);
+		std::deque<std::string>	getFactors(void);
 };
 
 #endif

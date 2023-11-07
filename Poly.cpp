@@ -31,32 +31,32 @@ std::string Poly::getExpr(void)
 	return this->expr;
 }
 
-void	Poly::setFactors(std::vector<std::string> vec)
+void	Poly::setFactors(std::deque<std::string> vec)
 {
 	this->factors = vec;
 }
 
-std::vector<std::string>	Poly::getFactors(void)
+std::deque<std::string>	Poly::getFactors(void)
 {
 	return this->factors;
 }
 
-void	Poly::setSign(std::vector<char> vec)
+void	Poly::setSign(std::deque<char> vec)
 {
 	this->sign = vec;
 }
 
-std::vector<char>	Poly::getSign(void)
+std::deque<char>	Poly::getSign(void)
 {
 	return this->sign;
 }
 
-void	Poly::setPowers(std::vector<int> vec)
+void	Poly::setPowers(std::deque<int> vec)
 {
 	this->powers = vec;
 }
 
-std::vector<int>	Poly::getPowers(void)
+std::deque<int>	Poly::getPowers(void)
 {
 	return this->powers;
 }
