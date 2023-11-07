@@ -14,6 +14,8 @@
 #include <algorithm>
 #include <sstream>
 
+void    calculMath(std::deque<std::string> deq);
+
 std::deque<std::string>	eraseVal(std::deque<std::string> vec, std::string str)
 {
 	for (std::deque<std::string>::iterator it = vec.begin(); it != vec.end(); ++it)
@@ -40,18 +42,21 @@ void	reducedForm(Poly *polyLeft, Poly *polyRight)
 	for (std::deque<std::string>::iterator it = vec.begin(); it != vec.end(); ++it)
 	{
 		std::deque<std::string>::iterator tmp(it);
-		tmp++;
-		if (tmp != vec.end())
-			std::cout << "lol\n\n\n";
-		else if (tmp == vec.end())
+		//tmp++;
+		//if (tmp != vec.end())
+		//	std::cout << "lol\n\n\n";
+		//else if (tmp == vec.end())
+		//{
+		std::cout << "ITITITI = " << *it << "\n";
+		if ((*tmp)[0] != '+' && (*tmp)[0] != '-')
 		{
 			std::deque<std::string> vecFac(polyLeft->getFactors());
 			std::deque<int> vecPow(polyLeft->getPowers());
-			std::cout << "lalalala = " << *it << "\n";
-			//vecFac.push_back("-");
+			int recupPow = atoi((char *)((*it).substr((*it).find("^") + 1, (*it).length())).c_str());
 			(*it).insert(0, 1, '-');
 			vecFac.push_back(*it);
-			vecPow.push_back(*(polyRight->getPowers()).begin());
+			std::cout << "recup pow 1 = " << recupPow << "\n";
+			vecPow.push_back(recupPow);
 			std::string recup = " - ";
 			recup += *it;
 			polyLeft->setExpr((char*)(polyLeft->getExpr() + recup).c_str());
@@ -59,6 +64,44 @@ void	reducedForm(Poly *polyLeft, Poly *polyRight)
 			polyLeft->setPowers(vecPow);
 			polyRight->setExpr((char*)"0");
 		}
+		else
+		{
+			if ((*tmp)[0] == '-')
+			{
+				std::deque<std::string> vecFac(polyLeft->getFactors());
+				std::deque<int> vecPow(polyLeft->getPowers());
+				int recupPow = atoi((char *)((*it).substr((*it).find("^") + 1, (*it).length())).c_str());
+				(*it).erase(0, 1);
+				(*it).insert(0, 1, '+');
+				vecFac.push_back(*it);
+			std::cout << "recup pow 2 = " << recupPow << "\n";
+				vecPow.push_back(recupPow);
+				std::string recup = " + ";
+				recup += *it;
+				polyLeft->setExpr((char*)(polyLeft->getExpr() + recup).c_str());
+				polyLeft->setFactors(vecFac);
+				polyLeft->setPowers(vecPow);
+				polyRight->setExpr((char*)"0");
+			}
+			else if ((*tmp)[0] == '+')
+			{
+				std::deque<std::string> vecFac(polyLeft->getFactors());
+				std::deque<int> vecPow(polyLeft->getPowers());
+				int recupPow = atoi((char *)((*it).substr((*it).find("^") + 1, (*it).length())).c_str());
+				(*it).erase(0, 1);
+				(*it).insert(0, 1, '-');
+			std::cout << "recup pow 3 = " << recupPow << "\n";
+				vecFac.push_back(*it);
+				vecPow.push_back(recupPow);
+				std::string recup = " - ";
+				recup += *it;
+				polyLeft->setExpr((char*)(polyLeft->getExpr() + recup).c_str());
+				polyLeft->setFactors(vecFac);
+				polyLeft->setPowers(vecPow);
+				polyRight->setExpr((char*)"0");
+			}
+		}
+		//}
 
 	}
 
@@ -69,15 +112,16 @@ void	reducedForm(Poly *polyLeft, Poly *polyRight)
 	int tmpPow = -4242;
 	for (std::deque<int>::iterator it = powers.begin(); it != powers.end(); ++it)
 	{
-		for (std::deque<int>::iterator tmpIt(it); tmpIt != powers.end(); ++tmpIt)
+			tmpPow = *it;
+		for (std::deque<int>::iterator tmpIt = powers.begin(); tmpIt != powers.end(); ++tmpIt)
 		{
-			if (tmpPow == *tmpIt)
+					std::cout << "powwwwww = " << *tmpIt << "    tmpPow = " << tmpPow << "\n";
+			if (tmpPow == *tmpIt && it != tmpIt)
 			{
 				std::deque<int>::iterator recup = std::find(recupPow.begin(), recupPow.end(), tmpPow);
 				if (recup == recupPow.end())
-					recupPow.push_back(tmpPow);
+					recupPow.push_back(*tmpIt);
 			}
-			tmpPow = *tmpIt;
 		}
 	}
 	for (std::deque<int>::iterator itPow = recupPow.begin(); itPow != recupPow.end(); ++itPow)
@@ -100,13 +144,13 @@ void	reducedForm(Poly *polyLeft, Poly *polyRight)
 			//if (*itPow == 
 
 		}
-		//std::cout << "powwwwww = " << *it << "\n";
 	}
 	
 	double sum = 0;
 	int	sign = 1;
 	int	init = 0;
 	int	test = 0;
+	int	countPow = 0;
 	std::deque<std::string>::iterator res;
 	std::string toAdd;
 	std::string recup;
@@ -120,10 +164,13 @@ void	reducedForm(Poly *polyLeft, Poly *polyRight)
 	//for (std::deque<std::string>::iterator all = vec2.begin(); all != vec2.end(); ++all)
 	//{
 		//recup = "";
+		int firstPow = atoi((char *)(*(forReduce.begin())).substr((*(forReduce.begin())).find("^") + 1, (*(forReduce.begin())).length()).c_str());
 		for (std::deque<std::string>::iterator it = forReduce.begin(); it != forReduce.end(); ++it)
 		{
 			size_t pos =  (*it).find("^");
 			int pow = atoi((char *)(*it).substr(pos + 1, (*it).length()).c_str());
+			if (pow != firstPow && pos != std::string::npos)
+				countPow++;
 			sum += atof(((*it).substr(0, (*it).find("X"))).c_str());
 			for (std::deque<std::string>::iterator it2 = forReduce.begin(); it2 != forReduce.end(); ++it2)
 			{
@@ -135,7 +182,6 @@ void	reducedForm(Poly *polyLeft, Poly *polyRight)
 				int tmpPow = atoi((char *)(*it2).substr(pos2 + 1, (*it2).length()).c_str());
 				if (pow == tmpPow)
 				{
-					//std::cout << "it = " << *it << "   it2 = " << *it2 << "\n";
 					size_t pos4 = (*it2).find("X");
 					sum += atof(((*it2).substr(0, (*it2).find("X"))).c_str());
 					std::stringstream rec;
@@ -150,7 +196,10 @@ void	reducedForm(Poly *polyLeft, Poly *polyRight)
 					//reduced = eraseVal(vec2, *it2);
 					(*it2).replace(0, pos3, str);
 					std::cout << "all after = " << *it2 << "\n";
-					forReduce.pop_front();
+					if (countPow == 0)
+						forReduce.pop_front();
+					else
+						forReduce.erase(forReduce.begin() + countPow);
 					//forReduce.erase(it);
 					//vec2.erase(all);
 					break ;
@@ -299,7 +348,10 @@ void	reducedForm(Poly *polyLeft, Poly *polyRight)
 
 	for (std::deque<std::string>::iterator it = forReduce.begin(); it != forReduce.end(); ++it)
 	{
-		vec2.push_back(*it);
+		if ((*it)[0] == '-' || (*it)[0] == '+')
+			vec2.push_back(*it);
+		else
+			vec2.push_front(*it);
 	}
 	/*
 	int flag = 0;
@@ -336,21 +388,71 @@ void	reducedForm(Poly *polyLeft, Poly *polyRight)
 
 	std::deque<std::string> recupFactor = polyLeft->getFactors();
 	std::string expr;
+	std::deque<std::string> ordered;
+	std::deque<int> recupPowers = polyLeft->getPowers();
+	int maxPow = 0;
+	sort(recupPowers.begin(), recupPowers.end(), std::greater<int>());
+	maxPow = *(recupPowers.begin());
+	if (maxPow <= 2)
+	{	
+		std::string p0;
+		std::string p1;
+		std::string p2;
+		for (std::deque<std::string>::iterator it = recupFactor.begin(); it != recupFactor.end();++ it)
+		{
+			std::cout << "ppppp = " << ((*it)[(*it).find("^") + 1]) << "\n";
+			if ((*it)[(*it).find("^") + 1] == '2')
+			{
+				p2 = *it;
+				p2 = p2.erase(p2.find("X"), 3);
+			}
+			else if ((*it)[(*it).find("^") + 1] == '1')
+			{
+				p1 = *it;
+				p1 = p1.erase(p1.find("X"), 3);
+			}
+			else if ((*it)[(*it).find("^") + 1] == '0')
+			{
+				p0 = *it;
+				p0 = p0.erase(p0.find("X"), 3);
+			}
+		}
+		ordered.push_back(p2);
+		ordered.push_back(p1);
+		ordered.push_back(p0);
+	}
+
+	for (std::deque<std::string>::iterator it = ordered.begin(); it != ordered.end();++ it)
+	{
+		std::cout << "ORDERED = " << *it << "\n";
+	}
+
 	for (std::deque<std::string>::iterator it = recupFactor.begin(); it != recupFactor.end();++ it)
 	{
+		
+		(*it).insert((*it).find("X"), 1, ' ');
+		(*it).insert((*it).find("X") - 1, 1, '*');
+		(*it).insert((*it).find("X") - 2 , 1, ' ');
+		if ((*it)[0] == '+' || (*it)[0] == '-')
+			(*it).insert(1, 1, ' ');
+
 		std::cout << "factors = " << *it << "\n";
 		expr += *it;
-		expr += " ";
+		std::deque<std::string>::iterator tmp(it);
+		tmp++;
+		if (tmp != recupFactor.end())
+			expr += " ";
 	}
+	expr += " = 0";
 	polyLeft->setExpr((char *)expr.c_str());
-/*	std::deque<char> recupSign = poly->getSign();
-	for (std::deque<char>::iterator it = recupSign.begin(); it != recupSign.end();++ it)
-		std::cout << "sign = " << *it << "\n";*/
-	std::deque<int> recupPowers = polyLeft->getPowers();
 	for (std::deque<int>::iterator it = recupPowers.begin(); it != recupPowers.end();++ it)
 		std::cout << "powers = " << *it << "\n";
 
 	std::cout << "Poly Left = " << polyLeft->getExpr() << "\n";
 	std::cout << "Poly Right = " << polyRight->getExpr() << "\n";
-
+	
+	std::cout << "Reduced Form: " << polyLeft->getExpr() << "\n";
+	std::cout << "Polynomial degree: " << maxPow << "\n";
+	if (maxPow <= 2)
+		calculMath(ordered);
 }
