@@ -6,7 +6,7 @@
 /*   By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 17:41:18 by jtaravel          #+#    #+#             */
-/*   Updated: 2023/11/08 15:37:47 by jtaravel         ###   ########.fr       */
+/*   Updated: 2023/11/08 18:15:53 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,9 +125,6 @@ void	reducedForm(Poly *polyLeft, Poly *polyRight)
 	}
 	
 	double	sum = 0;
-	int	sign = 1;
-	int	init = 0;
-	int	test = 0;
 	int	countPow = 0;
 	std::deque<std::string>::iterator res;
 	std::string toAdd;
@@ -151,7 +148,6 @@ void	reducedForm(Poly *polyLeft, Poly *polyRight)
 			int tmpPow = atoi((char *)(*it2).substr(pos2 + 1, (*it2).length()).c_str());
 			if (pow == tmpPow)
 			{
-				size_t pos4 = (*it2).find("X");
 				sum += atof(((*it2).substr(0, (*it2).find("X"))).c_str());
 				std::stringstream rec;
 				rec << sum;
@@ -212,6 +208,20 @@ void	reducedForm(Poly *polyLeft, Poly *polyRight)
 		ordered.push_back(p2);
 		ordered.push_back(p1);
 		ordered.push_back(p0);
+	}
+
+
+	for (std::deque<std::string>::iterator it = recupFactor.begin(); it != recupFactor.end();++ it)
+	{
+		size_t pos = (*it).find("X");
+		if (pos != std::string::npos)
+		{
+			std::string recup = (*it).substr(0, pos);
+			if (recup == "0")
+				recupFactor.erase(it);
+			if (recupFactor.size() <= 1)
+				break ;
+		}
 	}
 
 	for (std::deque<std::string>::iterator it = recupFactor.begin(); it != recupFactor.end();++ it)

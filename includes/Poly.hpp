@@ -6,7 +6,7 @@
 /*   By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 16:26:50 by jtaravel          #+#    #+#             */
-/*   Updated: 2023/11/08 15:37:33 by jtaravel         ###   ########.fr       */
+/*   Updated: 2023/11/08 17:05:03 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,16 @@
 #define BONUS 0
 #endif
 
+#ifndef TESTER
+#define TESTER 0
+#endif
+
 
 #include <iostream>
 #include <string>
 #include <deque>
+#include <stdlib.h>
+
 
 class	Poly
 {

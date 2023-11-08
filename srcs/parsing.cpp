@@ -6,7 +6,7 @@
 /*   By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 15:35:39 by jtaravel          #+#    #+#             */
-/*   Updated: 2023/11/08 15:36:00 by jtaravel         ###   ########.fr       */
+/*   Updated: 2023/11/08 17:58:42 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ int	checkFormat(char *str, Poly *poly)
 	poly->setFactors(factors);
 	poly->setSign(sign);
 	poly->setPowers(powers);
-	/*std::deque<std::string> recupFactor = poly->getFactors();
-	for (std::deque<std::string>::iterator it = recupFactor.begin(); it != recupFactor.end();++ it)
+	std::deque<std::string> recupFactor = poly->getFactors();
+	/*for (std::deque<std::string>::iterator it = recupFactor.begin(); it != recupFactor.end();++ it)
 		std::cout << "factors = " << *it << "\n";
 	std::deque<char> recupSign = poly->getSign();
 	for (std::deque<char>::iterator it = recupSign.begin(); it != recupSign.end();++ it)
@@ -85,7 +85,7 @@ std::string	refactoStr(std::string str, const char *ope, const char *toSplit)
 	std::deque<std::string> split = ft_splitdeque(cpy, tilps);
 	for (std::deque<std::string>::iterator it = split.begin(); it != split.end(); ++it)
 	{
-		if ((*it).find("-") != std::string::npos)
+		if ((*it).find("-") != std::string::npos && it != split.begin())
 		{
 			std::deque<std::string>::iterator beg = it;
 			std::string minus("-");

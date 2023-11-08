@@ -6,7 +6,7 @@
 /*   By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 15:32:35 by jtaravel          #+#    #+#             */
-/*   Updated: 2023/11/08 15:33:06 by jtaravel         ###   ########.fr       */
+/*   Updated: 2023/11/08 17:48:22 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,13 @@ std::deque<std::string> ft_splitdeque(std::string str, std::string deli)
 
 bool isNumber(const std::string& str)
 {
-	for (char const& c : str)
+	int i = 0;
+	while (str[i])
 	{
-		if (std::isdigit(c) == 0 && c != '.')
+		
+		if (std::isdigit(str[i]) == 0 && str[i] != '.' && str[i] != '+' && str[i] != '-')
 			return false;
+		i++;
 	}
 	return true;
 }

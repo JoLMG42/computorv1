@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   calculMath.cpp                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/08 15:54:34 by jtaravel          #+#    #+#             */
+/*   Updated: 2023/11/08 18:17:00 by jtaravel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Poly.hpp"
 #include <iostream>
 #include <deque>
-
 
 double	ft_sqrt(double A)
 {
@@ -27,7 +38,11 @@ void	calculMath(std::deque<std::string> deq)
 
 	if (a == 0)
 	{
-		double x1 =  -c / b;
+		double x1;
+		if (b == 0)
+			x1 = c;
+		else
+			x1 =  -c / b;
 		std::cout << "The solution is:\nx = " << x1 << "\n";
 		return ;
 
@@ -47,10 +62,13 @@ void	calculMath(std::deque<std::string> deq)
 		double x1 = (-b - ft_sqrt(delta)) / (2 * a);
 		double x2 = (-b + ft_sqrt(delta)) / (2 * a);
 		std::cout << "Discriminant is strictly positive, the two solutions are:\nx1 = " << x1 << " and " << "x2 = " << x2 << "\n";
+		return ;
 	}
 	else if (delta == 0)
 	{
 		double x1 = (-b / (2 * a));
 		std::cout << "Discriminant is equl to 0, the solution is:\nx1 = " << x1 << "\n";
+		return ;
 	}
+	std::cout << "Delta is strictly negative, there is no solution !\n";
 }
