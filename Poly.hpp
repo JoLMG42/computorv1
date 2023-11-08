@@ -14,6 +14,11 @@
 
 #define POLY_HPP
 
+#ifndef BONUS
+#define BONUS 0
+#endif
+
+
 #include <iostream>
 #include <string>
 #include <deque>

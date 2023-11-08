@@ -38,13 +38,18 @@ void	calculMath(std::deque<std::string> deq)
 	}
 
 	double delta = (b * b) - 4 * a * c;
-	std::cout << delta << "\n";
+	if (BONUS == 1)
+	{
+		double bb = b * b;
+		double ac = 4 * a * c;
+		std::cout << "Calcul delta with\n=> b² - 4ac\n=> " << b << "² - 4 * " << a << " * " << c << "\n=> " << bb << " - " << ac << "\n=> " << delta << "\n";
+	}
+
 
 	if (delta > 0)
 	{
 		double x1 = (-b - ft_sqrt(delta)) / (2 * a);
 		double x2 = (-b + ft_sqrt(delta)) / (2 * a);
-
 		std::cout << x1 << "\n";
 		std::cout << x2 << "\n";
 	}
