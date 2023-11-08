@@ -25,14 +25,10 @@ void	calculMath(std::deque<std::string> deq)
 	double b = atof((char *)(*(deq.begin() + 1)).c_str());
 	double c = atof((char *)(*(deq.begin() + 2)).c_str());
 
-	std::cout << a << "\n";
-	std::cout << b << "\n";
-	std::cout << c << "\n";
-
 	if (a == 0)
 	{
 		double x1 =  -c / b;
-		std::cout << x1 << "\n";
+		std::cout << "The solution is:\nx = " << x1 << "\n";
 		return ;
 
 	}
@@ -50,12 +46,11 @@ void	calculMath(std::deque<std::string> deq)
 	{
 		double x1 = (-b - ft_sqrt(delta)) / (2 * a);
 		double x2 = (-b + ft_sqrt(delta)) / (2 * a);
-		std::cout << x1 << "\n";
-		std::cout << x2 << "\n";
+		std::cout << "Discriminant is strictly positive, the two solutions are:\nx1 = " << x1 << " and " << "x2 = " << x2 << "\n";
 	}
 	else if (delta == 0)
 	{
 		double x1 = (-b / (2 * a));
-		std::cout << x1 << "\n";
+		std::cout << "Discriminant is equl to 0, the solution is:\nx1 = " << x1 << "\n";
 	}
 }
