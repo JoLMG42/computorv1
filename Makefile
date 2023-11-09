@@ -6,7 +6,7 @@
 #    By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/08 16:37:15 by jtaravel          #+#    #+#              #
-#    Updated: 2023/11/08 17:06:25 by jtaravel         ###   ########.fr        #
+#    Updated: 2023/11/09 19:22:56 by jtaravel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,6 +56,7 @@ clean	:
 	rm -rf objs/
 	rm -rf bobjs/
 	rm -rf tobjs/
+	rm -rf main.d
 
 fclean	:	clean
 	rm -rf $(NAME)

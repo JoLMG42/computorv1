@@ -28,6 +28,8 @@ int	checkFormat(char *str, Poly *poly)
 			return (0);
 		else if (((*it).find("*") <= (*it).length() || (*it)[0] == '*') && (*it).length() == 1)
 		{
+			if (it == vec.begin())
+				return (0);
 			std::deque<std::string>::iterator tmp(it);
 			std::string recup;
 			tmp--;

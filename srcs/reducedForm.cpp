@@ -6,7 +6,7 @@
 /*   By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 17:41:18 by jtaravel          #+#    #+#             */
-/*   Updated: 2023/11/08 18:15:53 by jtaravel         ###   ########.fr       */
+/*   Updated: 2023/11/09 19:20:05 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	reducedForm(Poly *polyLeft, Poly *polyRight)
 
 	}
 
+
 	
 	std::deque<int> powers = polyLeft->getPowers();
 	std::deque<int> recupPow;
@@ -123,6 +124,7 @@ void	reducedForm(Poly *polyLeft, Poly *polyRight)
 			}
 		}
 	}
+
 	
 	double	sum = 0;
 	int	countPow = 0;
@@ -160,7 +162,13 @@ void	reducedForm(Poly *polyLeft, Poly *polyRight)
 				if (countPow == 0)
 					forReduce.pop_front();
 				else
+				{
+					std::deque<std::string>::iterator temp(it);
+					temp--;
 					forReduce.erase(forReduce.begin() + countPow);
+					countPow--;
+					it = temp;
+				}
 				break ;
 			}
 		}
@@ -245,4 +253,6 @@ void	reducedForm(Poly *polyLeft, Poly *polyRight)
 	std::cout << "Polynomial degree: " << maxPow << "\n";
 	if (maxPow <= 2)
 		calculMath(ordered);
+	else
+		std::cout << "The polynomial degree is strictly greater than 2, I can't solve.\n";
 }
